@@ -25,7 +25,7 @@ QUINDI RINOMINA L'AUDIO APPENA SCARICATO IN "Vocali".wav
 
 
 
-- REQUISITI FASE 3
+REQUISITI FASE 3
 - Carica il video rinominato in "Ep".mkv su colab (su colab perché ci mette di meno a caricarlo che tramite script).
 
 (Se è un video di piccole dimensioni ancora meglio, ci mette di meno a caricarlo, ma non ridurre troppo la qualità).
@@ -36,4 +36,5 @@ Puoi anche cancellare "Ep.mkv" che non serve più.
 
 
 FASE 4
+
 Se avrai seguito le indicazioni precedenti, ti ritroverai alla fine un file "Final.srt".
