@@ -1,3 +1,6 @@
+Do you want to change the values ​​according to your preferences?  
+[Read here](Scripts/Migliora%20il%20Timing%20Dei%20Sub/README.md)
+
 As with "Auto Sub ReTimer" on Colab, there are requirements.
 
 - Put your episode renamed to "ep.mkv" inside the "Auto Sub ReTimer" folder.
