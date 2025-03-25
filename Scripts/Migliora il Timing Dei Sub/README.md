@@ -15,13 +15,14 @@ Values you can modify: 3.
 
 Value 1:  
 
-Temp  
+![Fase2 1](https://github.com/user-attachments/assets/d63c99e5-f897-4e11-a7a3-43e971b9f6d6)
 
 Changing this value ensures that the detection of the first audio peak of the spoken audio after the line start is identified with more margin.  
 
 Example with 200 milliseconds:  
 
-Temp  
+![Fase2 1 200](https://github.com/user-attachments/assets/d690943a-c353-41cf-8462-16208599f29d)
+
 Here, the value 200 is more than enough to detect the first audio peak after the line's initial timestamp.  
 The distance from the first arrow (line's initial timestamp) to the second arrow (first audio peak) falls within the 200-millisecond range.  
 If the distance of the audio peak is farther from the line's initial timestamp, you can increase this value.  
@@ -31,14 +32,15 @@ In some cases, if the audio peak is not detected correctly, it may use the next 
 
 Value 2:  
 
-Temp  
+![Fase2 2](https://github.com/user-attachments/assets/d488d037-9a22-4ee0-99f6-b665f8116035)
 
 Changing these values ensures that the detection of the first audio peak of the spoken audio before the line end is identified with more margin.  
 (You must modify all three "600" values to the same number.)  
 
 Example with 600 milliseconds:  
 
-Temp  
+![Fase2 2 600](https://github.com/user-attachments/assets/73264ebd-2543-4a74-885d-3c2208446b8a)
+
 Here, the value 600 is more than enough to detect the first audio peak before the line's final timestamp.  
 The distance from the first arrow (first audio peak) to the second arrow (line's final timestamp) falls within the 600-millisecond range.  
 If the distance of the audio peak is farther from the line's final timestamp, you can increase this value.  
@@ -48,7 +50,8 @@ In some cases, if the audio peak is not detected correctly, it may use the previ
 
 Value 3:  
 
-Temp  
+![Fase2 3](https://github.com/user-attachments/assets/e52be8bd-5ced-48d8-b8f5-6f9f24f2beaa)
+
 You can modify the lead-in and lead-out values based on your personal preference.  
 
 What issues might arise if this value is set too high?  
@@ -69,7 +72,7 @@ Values you can modify: 1.
 
 Value 1:  
 
-Temp  
+![Fase4 1](https://github.com/user-attachments/assets/102495c3-7c09-4d17-91fb-6565d9fa597d)
 Changing this value gives more margin to detect a scene change occurring after the line's final timestamp.  
 (If you set this value too high, it may result in lines being extended too much as lead-out to adjust to a scene change.)
 
