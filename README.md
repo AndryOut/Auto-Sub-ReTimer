@@ -5,15 +5,15 @@ As with "Auto Sub ReTimer" on Colab, there are requirements.
 - Go to the site "https://huggingface.co/spaces/abidlabs/music-separation" and upload the episode audio.
  - When the process is finished, download the "Vocals" audio.
   - Rename the downloaded audio to "vocali.wav" and place it in the "Auto Sub ReTimer" folder along with "ep.mkv".
- _______________________________________________________________________________________________
-|- Now the most important requirement, as with Colab...                                         |
-|   THE SPOKEN AUDIO MUST BE ENTIRELY WITHIN THE LINES AND NOT PARTIALLY OUTSIDE THE LINE       |
-|   (Audio Spectrum).                                                                           |
-|   THERE MUST NOT BE THE START OF SPOKEN AUDIO THAT BEGINS BEFORE THE LINE, FOR EXAMPLE.       |
-|   WHEN UPLOADING YOUR .ASS OR .SRT, MAKE SURE TO FOLLOW THE INSTRUCTIONS.                     |
-|   EVEN A QUICK SYNC THAT'S THE SAME FOR ALL LINES IS SUFFICIENT.                              |
-|   FOR EXAMPLE -0.050 OR -0.100. WITH VALUES TOO HIGH YOU WILL GET THE OPPOSITE EFFECT.        |
-|_______________________________________________________________________________________________|
+ 
+ - Now the most important requirement, as with Colab...                                         
+    THE SPOKEN AUDIO MUST BE ENTIRELY WITHIN THE LINES AND NOT PARTIALLY OUTSIDE THE LINE       
+    (Audio Spectrum).                                                                           
+    THERE MUST NOT BE THE START OF SPOKEN AUDIO THAT BEGINS BEFORE THE LINE, FOR EXAMPLE.       
+    WHEN UPLOADING YOUR .ASS OR .SRT, MAKE SURE TO FOLLOW THE INSTRUCTIONS.                     
+    EVEN A QUICK SYNC THAT'S THE SAME FOR ALL LINES IS SUFFICIENT.                              
+    FOR EXAMPLE -0.050 OR -0.100. WITH VALUES TOO HIGH YOU WILL GET THE OPPOSITE EFFECT.        
+
 
 - Run "Auto Sub ReTimer.bat".
  - In Phase 1 it will ask you to select the subtitles you want to adjust, BUT WITHOUT SIGNS!
