@@ -33,6 +33,34 @@ Meets the requirements:
   - Once finished, you will find "ep.mkv", "On Top.ass/.srt" and "Final.srt/.ass" on the desktop.
    - If "On Top" is empty, then there were no lines aligned at the top.
 
+Before and after examples Auto Sub ReTimer:
+
+Example 1 Original Sub:
+
+![Original](https://github.com/user-attachments/assets/7953eb46-e2ed-49ff-b1b0-3c997a78c0f5)
+![Original](https://github.com/user-attachments/assets/5e3d6209-8601-4ecd-a9e7-ebd7289b724a)
+
+Adjusted Sub with scene change:
+
+![Adjusted](https://github.com/user-attachments/assets/780d6aa0-d7bc-4ee8-865d-38849dd6d892)
+![Adjusted](https://github.com/user-attachments/assets/516aff27-5ab5-4e00-a75c-7ac88594b317)
+
+Example 2 Original Sub:
+
+![Original](https://github.com/user-attachments/assets/ed23556d-9766-44eb-a9cb-a20742c9e0ed)
+
+Adjusted Sub:
+
+![Adjusted](https://github.com/user-attachments/assets/30a422b8-e8f1-4351-a632-01f6c41efbad)
+
+Example 3 Original Sub:
+
+![Original](https://github.com/user-attachments/assets/abcb7e51-974e-4cf8-8ba4-0310459c13ed)
+
+Adjusted Sub with scene change:
+
+![Adjusted](https://github.com/user-attachments/assets/b2fc1fa4-83c5-4b2e-9596-63e3d9408b57)
+
 -------------------------------------------------------------------------------------------------
 
 To use whisper.
