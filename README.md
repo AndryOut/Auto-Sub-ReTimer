@@ -5,6 +5,11 @@ As with "Auto Sub ReTimer" on Colab, there are requirements.
 - Go to the site "https://huggingface.co/spaces/abidlabs/music-separation" and upload the episode audio.
  - When the process is finished, download the "Vocals" audio.
   - Rename the downloaded audio to "vocali.wav" and place it in the "Auto Sub ReTimer" folder along with "ep.mkv".
+
+Example:
+
+![Example](https://github.com/user-attachments/assets/67cb11ee-79b4-471d-9038-e94ddb60d95b)
+
  
  - Now the most important requirement, as with Colab...                                         
     THE SPOKEN AUDIO MUST BE ENTIRELY WITHIN THE LINES AND NOT PARTIALLY OUTSIDE THE LINE       
