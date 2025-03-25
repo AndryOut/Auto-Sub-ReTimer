@@ -1,40 +1,45 @@
-# Automatic-Timing-Sub-Fix
+As with "Auto Sub ReTimer" on Colab, there are requirements.
 
-REQUISITI FASE 1
-- I SUB CHE STAI PER CARICARE NON DEVONO AVERE CARTELLI.
-- Carica un .ass o un .srt per la separazione di righe con allineamento in alto sullo schermo e le righe che non lo sono. 
-- Quando avrà finito, l'unico file che ti serve è "Sub.srt" che dovrà essere ricaricato nel prossimo script.
-(Per non avere troppi file in giro, salvati solo i file in locale "On Top" e "Sub", poi cancella tutto)
+- Put your episode renamed to "ep.mkv" inside the "Auto Sub ReTimer" folder.
 
+- Go to the site "https://huggingface.co/spaces/abidlabs/music-separation" and upload the episode audio.
+ - When the process is finished, download the "Vocals" audio.
+  - Rename the downloaded audio to "vocali.wav" and place it in the "Auto Sub ReTimer" folder along with "ep.mkv".
+ _______________________________________________________________________________________________
+|- Now the most important requirement, as with Colab...                                         |
+|   THE SPOKEN AUDIO MUST BE ENTIRELY WITHIN THE LINES AND NOT PARTIALLY OUTSIDE THE LINE       |
+|   (Audio Spectrum).                                                                           |
+|   THERE MUST NOT BE THE START OF SPOKEN AUDIO THAT BEGINS BEFORE THE LINE, FOR EXAMPLE.       |
+|   WHEN UPLOADING YOUR .ASS OR .SRT, MAKE SURE TO FOLLOW THE INSTRUCTIONS.                     |
+|   EVEN A QUICK SYNC THAT'S THE SAME FOR ALL LINES IS SUFFICIENT.                              |
+|   FOR EXAMPLE -0.050 OR -0.100. WITH VALUES TOO HIGH YOU WILL GET THE OPPOSITE EFFECT.        |
+|_______________________________________________________________________________________________|
 
+- Run "Auto Sub ReTimer.bat".
+ - In Phase 1 it will ask you to select the subtitles you want to adjust, BUT WITHOUT SIGNS!
+  - Once finished, you will find "ep.mkv", "On Top.ass/.srt" and "Final.srt/.ass" on the desktop.
+   - If "On Top" is empty, then there were no lines aligned at the top.
 
-REQUISITI FASE 2
-- IL PARLATO DEVE ESSERE ALMENO DENTRO LE RIGHE E NON MEZZO FUORI DALLA RIGA (Spettro audio). 
-QUINDI NON DEVE ESSERCI L'INIZIO DEL PARLATO CHE INIZIA PRIMA DELLA RIGA, AD ESEMPIO.
-BASTA ANCHE UN SYNC ALLA VELOCE UGUALE PER TUTTE LE RIGHE.
+-------------------------------------------------------------------------------------------------
 
-- CARICA L'AUDIO DELL'EPISODIO QUI: https://huggingface.co/spaces/abidlabs/music-separation
-E SCARICA SOLO I "VOCALI"
-QUINDI RINOMINA L'AUDIO APPENA SCARICATO IN "Vocali".wav
+To use whisper.
 
-- Con la Fase 2 dovrai caricare PRIMA l'audio dell'ep con solo i "vocali" (controlla i requisiti) e poi il file "Sub.srt" della Fase 1.
+REQUIREMENTS
 
-- Una volta che la Fase 2 sarà completata,  puoi cancellare "temp.wav" e "Sub.srt" della Fase 1.
+-Extract the audio from your episode, rename it to "whisper.aac" and place it in the "Auto Sub ReTimer" folder.
+ (you can change the ".aac" extension by modifying "Whisper.bat").
+ - If you intend to improve the timing of whisper then you will need the "Vocals".
+   Go to the site "https://huggingface.co/spaces/abidlabs/music-separation" and upload the episode audio.
+   When the process is finished, download the "Vocals" audio.
+   Rename the downloaded audio to "vocali.wav" and place it in the "Auto Sub ReTimer" folder.
+   If you want it to also respect scene changes, then you will also need the episode renamed to "ep.mkv" in "Auto Sub ReTimer".
 
-- Mentre "Vocali" e "adjusted_Sub.srt" non cancellarli da colab.
+- You must first use "Whisper.bat", it will download everything needed (the default model is "medium").
+  (you can modify the model in "Whisper.bat").
 
+- When it is finished, you will find "whisper.srt".
 
-
-REQUISITI FASE 3
-- Carica il video rinominato in "Ep".mkv su colab (su colab perché ci mette di meno a caricarlo che tramite script).
-
-(Se è un video di piccole dimensioni ancora meglio, ci mette di meno a caricarlo, ma non ridurre troppo la qualità).
-
-- Qundo la Fase 3 sarà finita, avrai due output, "scene-timestamps.srt" (che puoi anche cancellare) e "scene_timestamps_adjusted.srt" che devi tenere caricato su colab.
-Puoi anche cancellare "Ep.mkv" che non serve più.
-
-
-
-FASE 4
-
-Se avrai seguito le indicazioni precedenti, ti ritroverai alla fine un file "Final.srt".
+- To improve the timing of "whisper.srt" you will need to use "Whisper ReTimer.bat".
+ - You will have two options: use only a basic timing improvement or ensure it also respects scene changes.
+  - Once you have made your choice and the process is complete, you will find everything you need on the desktop.
+   (Keep in mind that the improvement with scene changes is not perfect, especially if used with the basic timing of whisper).
