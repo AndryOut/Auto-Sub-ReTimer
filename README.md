@@ -14,6 +14,14 @@ As with "Auto Sub ReTimer" on Colab, there are requirements.
     EVEN A QUICK SYNC THAT'S THE SAME FOR ALL LINES IS SUFFICIENT.                              
     FOR EXAMPLE -0.050 OR -0.100. WITH VALUES TOO HIGH YOU WILL GET THE OPPOSITE EFFECT.        
 
+Does not meet the requirements:
+
+![Does not meet the requirements](https://github.com/user-attachments/assets/5e963886-c763-4511-a35a-716d4dba95cb)
+
+Meets the requirements:
+
+![Meets the requirements](https://github.com/user-attachments/assets/faace722-7cc3-400f-944a-2be206f7c0e6)
+
 
 - Run "Auto Sub ReTimer.bat".
  - In Phase 1 it will ask you to select the subtitles you want to adjust, BUT WITHOUT SIGNS!
