@@ -15,6 +15,7 @@ if not exist main (
     echo Creo la cartella "main"...
     python\python.exe -m venv main
     echo Installo il necessario...
+    call main\Scripts\activate.bat
     main\Scripts\python.exe -m pip install --upgrade pip
     main\Scripts\python.exe -m pip install -r "%script_folder%\requirements.txt"
     main\Scripts\python.exe -m pip install pysrt --use-pep517
