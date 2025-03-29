@@ -1,3 +1,4 @@
+What exactly do scripts do?
 Do you want to change the values ​​according to your preferences?  
 [Read here](Scripts/Migliora%20il%20Timing%20Dei%20Sub/README.md)
 
