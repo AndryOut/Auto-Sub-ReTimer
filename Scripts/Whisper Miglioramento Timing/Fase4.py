@@ -173,7 +173,7 @@ def adjust_sub_end_based_on_previous_scene_change(original_subs, scene_subs, aud
     return original_subs
 
 # Carica i file necessari
-original_subs = pysrt.open(os.path.join(project_path, 'adjusted_Sub.srt'), encoding='utf-8')
+original_subs = pysrt.open(os.path.join(project_path, 'whisper_adjusted.srt'), encoding='utf-8')
 scene_subs = pysrt.open(os.path.join(project_path, 'scene_timestamps_adjusted.srt'), encoding='utf-8')
 audio_peaks = get_audio_peaks(os.path.join(project_path, 'vocali.wav'))
 
