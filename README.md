@@ -1,4 +1,4 @@
-Temp
+![1](https://github.com/user-attachments/assets/abe9cbd1-610c-456b-a499-bc4a923d0a54)
 
 What exactly do the scripts do? 
 
@@ -10,7 +10,7 @@ If you have an NVIDIA GPU and plan to use it:
 - Locate the part of the file where it says "cu118".
 - Change "cu118" to match the CUDA version supported by your GPU.
 
-![1](https://github.com/user-attachments/assets/4f12a438-6abf-441b-b87e-f34b8f827ecf)
+![2](https://github.com/user-attachments/assets/5140eb44-28cf-4d8a-8894-e9cad96fc4a7)
 
 Tip: If you're unsure about your CUDA version, open a terminal (cmd) and type "nvidia-smi" to check it.
 
@@ -20,7 +20,7 @@ Tip: If you're unsure about your CUDA version, open a terminal (cmd) and type "n
 
 Example:
 
-![2](https://github.com/user-attachments/assets/5ed23b9f-58ea-4dad-8944-3be8df7ed11b)
+![3](https://github.com/user-attachments/assets/f099d468-b0e9-4fa6-980e-4307b727a414)
 
 - Run "Auto Sub ReTimer GUI.bat".
 
