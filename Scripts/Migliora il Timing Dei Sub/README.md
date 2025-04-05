@@ -1,5 +1,4 @@
 What exactly do the "Fasi.py" scripts do?  
-(You can edit the values by opening the .py files with Notepad)
 
 Fase0.py:
 - Extracts audio from "ep.mkv", passes it to demucs which extracts vocals with the CPU (3/5 minutes) or with GPU (30/40 seconds).
