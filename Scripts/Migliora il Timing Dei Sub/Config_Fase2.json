@@ -1,0 +1,6 @@
+{
+    "picco_audio_threshold": 200,
+    "max_range_picco": 600,
+    "lead_in": 150,
+    "lead_out": 500
+}

@@ -1,6 +1,12 @@
 What exactly do the "Fasi.py" scripts do?  
 (You can edit the values by opening the .py files with Notepad)
 
+Fase0.py:
+- Extracts audio from "ep.mkv", passes it to demucs which extracts vocals with the CPU (3/5 minutes) or with GPU (30/40 seconds).
+- Now there is no need to use the site anymore, it does everything automatically locally, make sure you have the right cuda version installed for you in the "main" folder to use GPU.
+
+Values you can modify: None.
+
 Fase1.py:  
 - Separates the "On top" lines (positioned at the top of the screen) based on tags like an8 and the alignments of styles in the .ass file.  
 - (Does not detect lines with "pos")  
@@ -11,13 +17,13 @@ Fase2.py:
 - Based on the audio peaks of spoken audio, removes the lead-in-out and resets them according to values that can be changed as per your preference.  
 - Joins close lines with a space of 0.000 seconds between them for better continuity.  
 
-Values you can modify: 3.  
+Values you can modify: 4.  
 
 Value 1:  
 
 ![Fase2 1](https://github.com/user-attachments/assets/d63c99e5-f897-4e11-a7a3-43e971b9f6d6)
 
-Changing this value ensures that the detection of the first audio peak of the spoken audio after the line start is identified with more margin.  
+"200" Changing this value ensures that the detection of the first audio peak of the spoken audio after the line start is identified with more margin.  
 
 Example with 200 milliseconds:  
 
@@ -34,8 +40,7 @@ Value 2:
 
 ![Fase2 2](https://github.com/user-attachments/assets/d488d037-9a22-4ee0-99f6-b665f8116035)
 
-Changing these values ensures that the detection of the first audio peak of the spoken audio before the line end is identified with more margin.  
-(You must modify all three "600" values to the same number.)  
+"600" Changing these values ensures that the detection of the first audio peak of the spoken audio before the line end is identified with more margin.  
 
 Example with 600 milliseconds:  
 
@@ -48,7 +53,7 @@ If the distance of the audio peak is farther from the line's final timestamp, yo
 What issues might arise if this value is set too high?  
 In some cases, if the audio peak is not detected correctly, it may use the previous audio peak (as it has more margin), resulting in a line with a part of the spoken audio cut off.
 
-Value 3:  
+Value 3-4 "150" - "500":  
 
 ![Fase2 3](https://github.com/user-attachments/assets/e52be8bd-5ced-48d8-b8f5-6f9f24f2beaa)
 
@@ -74,7 +79,9 @@ Value 1:
 
 ![Fase4 1](https://github.com/user-attachments/assets/102495c3-7c09-4d17-91fb-6565d9fa597d)
 Changing this value gives more margin to detect a scene change occurring after the line's final timestamp.  
-(If you set this value too high, it may result in lines being extended too much as lead-out to adjust to a scene change.)
+(If you set this value too high, it may result in lines being extended too much as lead-out to adjust to a scene change. )
+
+(Keep in mind that this value is linked to the lead-out of "Fase2". So if you have set "500" in lead-out, the "300" range will check if there are scene changes after "500" of lead out, this means that if it finds a scene change, you will have a line that from the final audio peak will be a hypothetical 800 ms in lead-out until the detected scene change (500 ± 300).)
 
 Fase5.py:  
 - Ensures that if you initially uploaded an .ass file with subs to adjust, you will get a final .ass file with the original header of the uploaded subs, and every single line will retain its original styles but with adjusted timing.  
