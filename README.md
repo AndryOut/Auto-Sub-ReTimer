@@ -12,7 +12,7 @@ If you have an NVIDIA GPU and plan to use it:
 
 ![2](https://github.com/user-attachments/assets/5140eb44-28cf-4d8a-8894-e9cad96fc4a7)
 
-Tip: If you're unsure about your CUDA version, open a terminal (cmd) and type "nvidia-smi" to check it.
+Tip: If you're unsure about your CUDA version, open a terminal (cmd) and type "nvidia-smi" to check it (you don’t necessarily have to use a recent CUDA version, you can also use an older one for better compatibility. The important thing is that it is compatible with your NVIDIA card).
 
 - Save and you're done!
 
@@ -36,10 +36,11 @@ Does not meet the requirements:
 
 ![Does not meet the requirements](https://github.com/user-attachments/assets/5e963886-c763-4511-a35a-716d4dba95cb)
 
-Meets the requirements:
+Meets the requirements (It is not necessary for the initial timestamp to perfectly align with the beginning of the audio peak of the speech, the important thing is that it is included within the line):
 
 ![Meets the requirements](https://github.com/user-attachments/assets/faace722-7cc3-400f-944a-2be206f7c0e6)
 
+(If the process were to stop for any reason, delete the previously created files from the program to avoid conflicts)
 
 Before and after examples Auto Sub ReTimer:
 
