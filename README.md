@@ -36,7 +36,7 @@ Does not meet the requirements:
 
 ![Does not meet the requirements](https://github.com/user-attachments/assets/5e963886-c763-4511-a35a-716d4dba95cb)
 
-Meets the requirements (It is not necessary for the initial timestamp to perfectly align with the beginning of the audio peak of the speech, the important thing is that it is included within the line):
+Meets the requirements (It is not necessary for the initial timestamp to perfectly align with the beginning of the audio peak of the speech, the important thing is that the beginning of the speech is included, the rest will be handled by the program):
 
 ![Meets the requirements](https://github.com/user-attachments/assets/faace722-7cc3-400f-944a-2be206f7c0e6)
 
