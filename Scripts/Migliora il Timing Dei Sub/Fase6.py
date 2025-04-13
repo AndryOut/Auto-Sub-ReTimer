@@ -1,19 +1,20 @@
 import os
 
 # Funzione per pulire tutte le directory __pycache__
-def pulisci_pycache(directory):
-    for root, dirs, files in os.walk(directory):
-        for d in dirs:
-            if d == "__pycache__":
-                path = os.path.join(root, d)
-                print(f"Svuotando la cache nella cartella: {path}")
-                for file in os.listdir(path):
-                    file_path = os.path.join(path, file)
-                    try:
-                        os.remove(file_path)
-                        print(f"File eliminato: {file_path}")
-                    except Exception as e:
-                        print(f"Errore nel rimuovere {file_path}: {e}")
+# (DISABILITATA - COMMENTATA)
+# def pulisci_pycache(directory):
+#     for root, dirs, files in os.walk(directory):
+#         for d in dirs:
+#             if d == "__pycache__":
+#                 path = os.path.join(root, d)
+#                 print(f"Svuotando la cache nella cartella: {path}")
+#                 for file in os.listdir(path):
+#                     file_path = os.path.join(path, file)
+#                     try:
+#                         os.remove(file_path)
+#                         print(f"File eliminato: {file_path}")
+#                     except Exception as e:
+#                         print(f"Errore nel rimuovere {file_path}: {e}")
 
 # Funzione per eliminare i file specificati
 def elimina_file(files_to_delete, base_path):
@@ -104,10 +105,10 @@ try:
     else:
         print("Nessun set di file trovato per lo spostamento.")
 
-    # Pulizia delle cache
-    print("Pulizia delle cache...")
-    pulisci_pycache(project_path)
-    print("Pulizia completata.")
+    # Pulizia delle cache (DISABILITATA - COMMENTATA)
+    # print("Pulizia delle cache...")
+    # pulisci_pycache(project_path)
+    # print("Pulizia completata.")
 
 except Exception as e:
     print(f"Si è verificato un errore generale: {e}")

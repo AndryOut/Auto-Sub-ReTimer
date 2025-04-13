@@ -63,10 +63,8 @@ video_manager = open_video(video_path)
 
 # SceneManager con AdaptiveDetector e ContentDetector
 scene_manager = SceneManager()
-adaptive_detector = AdaptiveDetector(adaptive_threshold=19)
-content_detector = ContentDetector(threshold=19)
+adaptive_detector = AdaptiveDetector(adaptive_threshold=3)
 scene_manager.add_detector(adaptive_detector)
-scene_manager.add_detector(content_detector)
 
 # Rileva le scene
 scene_manager.detect_scenes(video_manager)

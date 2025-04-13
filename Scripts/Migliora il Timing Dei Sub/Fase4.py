@@ -50,7 +50,7 @@ def adjust_subs_based_on_scenes(original_subs, scene_subs):
         for scene in reversed(scene_subs):
             scene_end = scene.end.ordinal
             sub_start = sub.start.ordinal
-            if 0 < (sub_start - scene_end) <= 200:
+            if 0 < (sub_start - scene_end) <= 150:
                 sub.start = milliseconds_to_subrip_time(scene_end)
                 start_replaced = True
                 break
@@ -74,7 +74,7 @@ def adjust_sub_start_based_on_scene_change(original_subs, scene_subs):
         sub_start = sub.start.ordinal
         for scene in scene_subs:
             scene_start = scene.start.ordinal
-            if 0 < (scene_start - sub_start) <= 200:
+            if 0 < (scene_start - sub_start) <= 150:
                 sub.start = milliseconds_to_subrip_time(scene_start)
                 break
     return original_subs
