@@ -24,7 +24,7 @@ class SubtitleProcessor:
         
         self.FALSE_POSITIVES = ['top', 'bottom', 'oped', 'operator', 
                                'editor', 'speed', 'special', 'response', 
-                               'operation', 'signature', 'sopra', 'subtitle']
+                               'operation', 'signature', 'sopra', 'subtitle', 'copy', 'copia']
         
         # UI Setup
         self.setup_styles()
