@@ -7,8 +7,17 @@ Fase0.py:
 Values you can modify: None.
 
 Fase1.py:  
-- Separates the "On top" lines (positioned at the top of the screen) based on tags like an8 and the alignments of styles in the .ass file.  
-- (Does not detect lines with "pos")  
+Separate from uploaded .ass sub (No need to manually sort everything anymore—the program does it all for you):
+
+- "Signs": Contains all signs, opening, and ending subtitles (necessary separation to adjust dialogue timing).
+
+- "Comments": Contains commented lines and empty lines (necessary separation to adjust dialogue timing).
+
+- "On Top": Contains all dialogues positioned at the top of the screen (necessary separation to adjust dialogue timing).
+
+Separate from uploaded .srt sub:
+
+- "On Top": Contains all dialogues positioned at the top of the screen (necessary separation to adjust dialogue timing). 
 
 Values you can modify: None.
 
@@ -87,3 +96,11 @@ Fase5.py:
 - Ensures that if you initially uploaded an .ass file with subs to adjust, you will get a final .ass file with the original header of the uploaded subs, and every single line will retain its original styles but with adjusted timing.  
 
 Values you can modify: None.
+
+
+Fase6.py:  
+- Delete files that are no longer needed after adjusting the sub timing.
+- Move the files you need to the Desktop.
+
+Values you can modify: None.
+

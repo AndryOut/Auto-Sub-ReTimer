@@ -79,7 +79,9 @@ files_to_delete_option_2 = [
 files_to_move_option_1 = [
     "ep.mkv",
     "On Top.ass",
-    "Final.ass"
+    "Final.ass",
+    "Signs.ass",
+    "Comments.ass"
 ]
 
 # File da spostare sul Desktop (seconda opzione)
