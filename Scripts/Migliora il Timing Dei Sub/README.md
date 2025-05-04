@@ -7,9 +7,9 @@ Fase0.py:
 Values you can modify: None.
 
 Fase1.py:  
-Separate from uploaded .ass sub (No need to manually sort everything anymore—the program does it all for you):
+Separate from uploaded .ass sub (No need to manually sort everything anymore, the program does it all for you):
 
-- "Signs": Contains all signs, opening, and ending subtitles (necessary separation to adjust dialogue timing).
+- "Signs": Contains all signs, opening and ending subtitles (necessary separation to adjust dialogue timing).
 
 - "Comments": Contains commented lines and empty lines (necessary separation to adjust dialogue timing).
 
