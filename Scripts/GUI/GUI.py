@@ -632,13 +632,13 @@ def esegui_auto_sub_retimer():
     
     try:
         fasi = [
-            (0, paths['retimer_scripts']['fase0'], False),
-            (1, paths['retimer_scripts']['fase1'], True),
+            (0, paths['retimer_scripts']['fase0'], True),
+            (1, paths['retimer_scripts']['fase1'], False),
             (2, paths['retimer_scripts']['fase2'], False),
             (3, paths['retimer_scripts']['fase3'], False),
             (4, paths['retimer_scripts']['fase4'], False),
             (5, paths['retimer_scripts']['fase5'], False),
-            (6, paths['retimer_scripts']['fase6'], False)
+            (6, paths['retimer_scripts']['fase6'], True)
         ]
         
         log_message("🚀 Starting Auto Sub ReTimer process\n")
@@ -888,10 +888,9 @@ def seleziona_funzione(funzione):
                 "There must not be the start of spoken audio that begins before the line, for example.\n"
                 "Even a quick sync that's the same for all lines is sufficient, for example -0.050 or -0.100.\n"
                 "\n"
-                "3. In Fase1, you will be asked to upload the subtitle.\n"
+                "3. In Fase0, you will be asked to upload the subtitle.\n"
                 "It will automatically separate Signs, Comments and On Top to avoid conflicts with the timing adjustment of dialogues.\n"
                 "If the program can't figure out where certain lines go, you'll be asked to select where to put them.\n"
-                "If Signs, Comments and On Top are empty, then there was nothing to separate.\n"
                 "If the separation does not work as expected, you can always manually separate everything to leave only the dialogues.\n"
                 "\n"
                 "4. If the video codec is Av1, PySceneDetect will not work in Fase3.\n"
