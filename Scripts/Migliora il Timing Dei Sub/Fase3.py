@@ -68,8 +68,9 @@ content_detector = ContentDetector(threshold=29)
 scene_manager.add_detector(adaptive_detector)
 scene_manager.add_detector(content_detector)
 
-# Rileva le scene
-scene_manager.detect_scenes(video_manager)
+# Rileva le scene con progress bar
+print("Analisi delle scene in corso...")
+scene_manager.detect_scenes(video_manager, show_progress=True)
 scene_list = scene_manager.get_scene_list()
 
 # Esporta i risultati in formato SRT
