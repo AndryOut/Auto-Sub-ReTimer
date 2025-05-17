@@ -7,6 +7,7 @@ import sys
 from tkinter import messagebox
 import re
 import json
+import time
 
 # Configurazione della GUI
 ctk.set_appearance_mode("dark")
@@ -19,6 +20,8 @@ config_entries = {}
 is_running = False
 funzione_selezionata = None
 paths = None
+start_time = None
+execution_time_label = None
 
 # Finestra principale
 root = ctk.CTk()
@@ -452,6 +455,8 @@ progress_bar.set(0)
 
 progress_label = ctk.CTkLabel(progress_frame, text="Completion: 0%", font=("Arial", 12))
 progress_label.pack(anchor="e")
+execution_time_label = ctk.CTkLabel(progress_frame, text="Time: 00:00:00", font=("Arial", 12))
+execution_time_label.pack(anchor="e")
 
 # Pulsanti configurazione
 config_buttons_frame = ctk.CTkFrame(frame_center)
@@ -519,6 +524,15 @@ instructions_text.insert("1.0",
 # --------------------------------------------------
 # GESTIONE ESECUZIONE
 # --------------------------------------------------
+# Timer
+def update_timer():
+    if start_time:
+        elapsed = int(time.time() - start_time)
+        hours, remainder = divmod(elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        execution_time_label.configure(text=f"Time: {hours:02}:{minutes:02}:{seconds:02}")
+    root.after(1000, update_timer)
+
 def update_log():
     while not output_queue.empty():
         msg = output_queue.get()
@@ -566,6 +580,12 @@ def run_interactive_phase(phase_num, phase_path):
                 if "cartelli" in output.lower() or "scegli" in output.lower():
                     question = output.strip()
                     options = ["Sì", "No"] if "cartelli" in output.lower() else ["Option 1", "Option 2"]
+                    
+                    # Per Fase6, ferma il timer prima del popup
+                    if phase_num == 6:
+                        global start_time
+                        start_time = None
+                    
                     answer = input_handler.ask_question(question, options)
                     
                     if answer is not None:
@@ -619,7 +639,7 @@ def run_normal_phase(phase_num, phase_path):
         return False
 
 def esegui_auto_sub_retimer():
-    global is_running
+    global is_running, start_time
     
     if is_running:
         return
@@ -644,14 +664,25 @@ def esegui_auto_sub_retimer():
         log_message("🚀 Starting Auto Sub ReTimer process\n")
         
         for phase_num, phase_path, is_interactive in fasi:
-            if is_interactive:
+            # Per Fase0, avvia il timer solo dopo che la finestra di selezione file è chiusa
+            if phase_num == 0:
                 success = run_interactive_phase(phase_num, phase_path)
+                if success:
+                    start_time = time.time()  # Avvia timer solo dopo selezione file
             else:
-                success = run_normal_phase(phase_num, phase_path)
+                if is_interactive:
+                    success = run_interactive_phase(phase_num, phase_path)
+                else:
+                    success = run_normal_phase(phase_num, phase_path)
                 
             if not success:
                 log_message("❌ Process interrupted\n")
                 break
+                
+            # Ferma il timer dopo Fase5 invece che Fase6
+            if phase_num == 5:
+                start_time = None
+                
         else:
             log_message("🎉 Process completed successfully!\n")
         
@@ -659,6 +690,7 @@ def esegui_auto_sub_retimer():
             
     finally:
         is_running = False
+        start_time = None
         button_avvia.configure(state="normal")
         status_label.configure(text="Status: Completed")
 
@@ -959,4 +991,5 @@ def seleziona_funzione(funzione):
 # --------------------------------------------------
 seleziona_funzione("Auto Sub ReTimer")
 root.after(100, update_log)
+root.after(1000, update_timer)
 root.mainloop()

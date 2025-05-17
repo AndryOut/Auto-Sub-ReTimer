@@ -4,6 +4,7 @@ from scenedetect.detectors import AdaptiveDetector
 import pysrt
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
+from concurrent.futures import as_completed
 
 # Percorso della directory principale del progetto (relativa)
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -103,7 +104,7 @@ def process_segment(args):
         )
         scene_manager.add_detector(adaptive_detector)
         
-        scene_manager.detect_scenes(video_manager, end_time=end_time + 0.5, show_progress=True)
+        scene_manager.detect_scenes(video_manager, end_time=end_time + 0.5)
         
         segment_scenes = []
         for scene in scene_manager.get_scene_list():
@@ -139,12 +140,22 @@ def main():
 
     # Rilevamento parallelo delle scene
     print("Analisi parallela delle scene in corso...")
+    total_segments = len(segments)
+    num_threads = min(cpu_count(), len(segments)) if segments else 1  # Mantieni la tua logica originale
     
-    # num_processes
-    num_threads = min(cpu_count(), len(segments)) if segments else 1
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         futures = [executor.submit(process_segment, arg) for arg in process_args]
-        results = [future.result() for future in futures]
+        
+        for i, _ in enumerate(as_completed(futures), 1):
+            progress = int((i / total_segments) * 50)
+            print("\rAnalisi scene: [{}{}] {:>3}%".format(
+                '=' * progress,
+                ' ' * (50 - progress),
+                int((i / total_segments) * 100)), 
+                end='', flush=True)
+    
+    print("\nAnalisi completata!")
+    results = [future.result() for future in futures] 
 
     # Unisci i risultati
     all_scenes = []
