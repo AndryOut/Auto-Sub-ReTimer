@@ -1,12 +1,6 @@
 What exactly do the "Fasi.py" scripts do?  
 
-Fase0.py:
-- Extracts audio from "ep.mkv", passes it to demucs which extracts vocals with the CPU (3/5 minutes) or with GPU (30/40 seconds).
-- Now there is no need to use the site anymore, it does everything automatically locally, make sure you have the right cuda version installed for you in the "main" folder to use GPU.
-
-Values you can modify: None.
-
-Fase1.py:  
+Fase0.py:  
 Separate from uploaded .ass sub (No need to manually sort everything anymore, the program does it all for you):
 
 - "Signs": Contains all signs, opening and ending subtitles (necessary separation to adjust dialogue timing).
@@ -18,6 +12,12 @@ Separate from uploaded .ass sub (No need to manually sort everything anymore, th
 Separate from uploaded .srt sub:
 
 - "On Top": Contains all dialogues positioned at the top of the screen (necessary separation to adjust dialogue timing). 
+
+Values you can modify: None.
+
+Fase1.py:
+- Extracts audio from "ep.mkv", passes it to demucs which extracts vocals with the CPU (3/5 minutes) or with GPU (30/40 seconds).
+- Now there is no need to use the site anymore, it does everything automatically locally, make sure you have the right cuda version installed for you in the "main" folder to use GPU.
 
 Values you can modify: None.
 
@@ -101,6 +101,7 @@ Values you can modify: None.
 Fase6.py:  
 - Delete files that are no longer needed after adjusting the sub timing.
 - Move the files you need to the Desktop.
+- You’ll be asked whether you want to merge "On top.ass/.srt," "Comments.ass" and "Signs.ass" into the final file. If you choose not to merge them, the separate files will also be moved to the desktop.
 
 Values you can modify: None.
 
