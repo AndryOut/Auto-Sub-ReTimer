@@ -44,12 +44,8 @@ def milliseconds_to_subrip_time(milliseconds):
     milliseconds = int(milliseconds % 1000)
     return pysrt.SubRipTime(hours=hours, minutes=minutes, seconds=seconds, milliseconds=milliseconds)
 
-def get_audio_segments(audio_file, silence_threshold=320):
-    audio = AudioSegment.from_file(audio_file)
-    temp_file = os.path.join(project_path, "temp.wav")
-    audio.export(temp_file, format="wav")
-
-    y, sr = librosa.load(temp_file, sr=None)
+def get_audio_segments(audio_file="vocali.wav", silence_threshold=320):
+    y, sr = librosa.load(audio_file, sr=None)
     intervals = librosa.effects.split(y, top_db=20)
 
     segments = []

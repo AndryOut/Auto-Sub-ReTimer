@@ -282,7 +282,6 @@ files_to_delete_option_1 = [
     "scene_timestamps.srt",
     "scene_timestamps_adjusted.srt",
     "Sub.srt",
-    "temp.wav",
     "vocali.wav",
     "Dialoghi.ass",
     "Final.srt",
@@ -296,7 +295,6 @@ files_to_delete_option_2 = [
     "scene_timestamps.srt",
     "scene_timestamps_adjusted.srt",
     "Sub.srt",
-    "temp.wav",
     "vocali.wav",
     "On Top.srt"
 ]

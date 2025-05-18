@@ -160,7 +160,7 @@ def adjust_sub_end_based_on_previous_scene_change(original_subs, scene_subs, aud
     max_range = 900
     peak_threshold = 150  # 150ms per early/late peaks
     min_gap_to_next_sub = 100
-    min_peaks_count = 2
+    min_peaks_count = 3
     
     for i, sub in enumerate(original_subs):
         original_end = sub.end.ordinal
