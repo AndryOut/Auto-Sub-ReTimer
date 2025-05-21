@@ -12,9 +12,9 @@ CONFIG_PATH = os.path.join(os.path.dirname(__file__), "Config_Fase2.json")
 
 # Valori di default (gli stessi dello script originale)
 DEFAULT_CONFIG = {
-    "picco_audio_threshold": 200,
-    "max_range_picco": 600,
-    "lead_in": 150,
+    "picco_audio_threshold": 300,
+    "max_range_picco": 700,
+    "lead_in": 200,
     "lead_out": 500
 }
 
@@ -117,7 +117,7 @@ def add_lead_in_out(segments, original_subs, lead_in=LEAD_IN, lead_out=LEAD_OUT)
         adjusted_segments.append((new_start, new_end))
     return adjusted_segments
 
-def adjust_segments_for_overlap(segments, max_lead_out=50, lead_in=30, max_lead_in=50, lead_out=30):
+def adjust_segments_for_overlap(segments, max_lead_out=0, lead_in=0, max_lead_in=0, lead_out=0):
     adjusted_segments = []
     for i in range(len(segments) - 1):
         start, end = segments[i]

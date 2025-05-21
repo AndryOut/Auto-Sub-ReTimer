@@ -128,7 +128,10 @@ def mostra_config_fase4():
             with open(config_path, "r") as f:
                 config = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            config = {"max_range_next_scene": 300}
+            config = {
+                "max_range_next_scene": 300,
+                "gap_threshold": 200
+            }
         
         config_frame = ctk.CTkFrame(frame_center)
         config_frame.pack(fill="x", padx=10, pady=(0, 10), before=log_text)
@@ -136,13 +139,22 @@ def mostra_config_fase4():
         ctk.CTkLabel(config_frame, text="Fase4 Configuration", font=("Arial", 14, "bold")).pack(pady=5)
         
         # Campo per max_range_next_scene
-        frame = ctk.CTkFrame(config_frame)
-        frame.pack(fill="x", padx=5, pady=2)
-        ctk.CTkLabel(frame, text="Max range to detect a scene change from the final timestamp (ms):", width=180).pack(side="left")
-        entry = ctk.CTkEntry(frame, width=80)
-        entry.insert(0, str(config["max_range_next_scene"]))
-        entry.pack(side="right")
-        config_entries["max_range_next_scene"] = entry
+        frame1 = ctk.CTkFrame(config_frame)
+        frame1.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(frame1, text="Max range to detect a scene change from the final timestamp (ms):", width=180).pack(side="left")
+        entry1 = ctk.CTkEntry(frame1, width=80)
+        entry1.insert(0, str(config["max_range_next_scene"]))
+        entry1.pack(side="right")
+        config_entries["max_range_next_scene"] = entry1
+        
+        # NUOVO CAMPO per gap_threshold
+        frame2 = ctk.CTkFrame(config_frame)
+        frame2.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(frame2, text="Max gap 'empty' between two lines to attach (ms):", width=180).pack(side="left")
+        entry2 = ctk.CTkEntry(frame2, width=80)
+        entry2.insert(0, str(config.get("gap_threshold", 200)))
+        entry2.pack(side="right")
+        config_entries["gap_threshold"] = entry2
         
         # Pulsanti Save/Cancel
         btn_frame = ctk.CTkFrame(config_frame)
@@ -203,7 +215,8 @@ def salva_config_fase4():
     try:
         config_path = os.path.join(paths['project_root'], "Scripts", "Migliora il Timing Dei Sub", "Config_Fase4.json")
         new_config = {
-            "max_range_next_scene": int(config_entries["max_range_next_scene"].get())
+            "max_range_next_scene": int(config_entries["max_range_next_scene"].get()),
+            "gap_threshold": int(config_entries["gap_threshold"].get())
         }
         
         with open(config_path, "w") as f:
@@ -566,7 +579,7 @@ def run_interactive_phase(phase_num, phase_path):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            bufsize=1,
+            bufsize=4096,
             universal_newlines=True,
             cwd=paths['project_root']
         )
@@ -990,6 +1003,6 @@ def seleziona_funzione(funzione):
 # AVVIO APPLICAZIONE
 # --------------------------------------------------
 seleziona_funzione("Auto Sub ReTimer")
-root.after(100, update_log)
+root.after(500, update_log)
 root.after(1000, update_timer)
 root.mainloop()

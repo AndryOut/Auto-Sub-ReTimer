@@ -1,3 +1,4 @@
 {
-    "max_range_next_scene": 300
+    "max_range_next_scene": 300,
+    "gap_threshold": 200
 }
