@@ -16,7 +16,7 @@ CONFIG_PATH = os.path.join(project_path, "Scripts", "Migliora il Timing Dei Sub"
 # Valori di default
 DEFAULT_CONFIG = {
     "max_range_next_scene": 300,
-    "gap_threshold": 200 
+    "gap_threshold": 230 
 }
 
 try:
@@ -83,9 +83,9 @@ def adjust_sub_start_based_on_scene_change(original_subs, scene_subs):
     return original_subs
 
 def add_lead_in_to_peaks(subs, audio_peaks):
-    min_lead_in = 5
-    max_lead_in = 5
-    additional_lead_in = 0
+    min_lead_in = 10
+    max_lead_in = 20
+    additional_lead_in = 30
 
     for idx, sub in enumerate(subs):
         sub_start = sub.start.ordinal
@@ -111,7 +111,7 @@ def add_lead_in_to_peaks(subs, audio_peaks):
 def add_lead_in_based_on_conditions(subs, scene_subs):
     min_duration = 100
     max_duration = 1500
-    lead_in_increment = 100
+    lead_in_increment = 50
     range_previous_line = 50
 
     for idx, sub in enumerate(subs):
