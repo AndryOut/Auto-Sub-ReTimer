@@ -14,8 +14,8 @@ CONFIG_PATH = os.path.join(os.path.dirname(__file__), "Config_Fase2.json")
 DEFAULT_CONFIG = {
     "picco_audio_threshold": 300,
     "max_range_picco": 700,
-    "lead_in": 200,
-    "lead_out": 500
+    "lead_in": 150,
+    "lead_out": 400
 }
 
 try:
@@ -46,7 +46,7 @@ def milliseconds_to_subrip_time(milliseconds):
 
 def get_audio_segments(audio_file="vocali.wav", silence_threshold=320):
     y, sr = librosa.load(audio_file, sr=None)
-    intervals = librosa.effects.split(y, top_db=20)
+    intervals = librosa.effects.split(y, top_db=25)
 
     segments = []
     for start, end in intervals:
