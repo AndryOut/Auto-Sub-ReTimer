@@ -33,7 +33,7 @@ def get_audio_segments(audio_file, silence_threshold=320):
     y, sr = librosa.load(temp_audio_file, sr=None)
 
     # Rileva i segmenti non silenziosi
-    intervals = librosa.effects.split(y, top_db=20)
+    intervals = librosa.effects.split(y, top_db=25)
 
     # Converte i segmenti in millisecondi
     segments = []

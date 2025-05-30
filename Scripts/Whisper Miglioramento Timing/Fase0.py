@@ -26,20 +26,7 @@ if not os.path.isfile(ffmpeg_path):
     print(f"Errore: FFmpeg non trovato nel percorso '{ffmpeg_path}'.")
     exit()
 
-# Nome fisso per il file audio WAV
-audio_file = "audio.wav"
-audio_path = os.path.join(output_dir, audio_file)
-
-# Comando FFmpeg per estrarre e convertire l'audio
-ffmpeg_command = f'"{ffmpeg_path}" -hide_banner -loglevel error -i "{input_path}" -vn -acodec pcm_s16le -ar 44100 -ac 2 "{audio_path}"'
-
-try:
-    print(f"Estrazione e conversione dell'audio...")
-    subprocess.run(ffmpeg_command, shell=True, check=True)
-    print(f"Audio estratto e convertito in: {audio_path}")
-except subprocess.CalledProcessError as e:
-    print(f"Errore durante il processo di estrazione/conversione: {e}")
-    exit()
+input_for_demucs = input_path
 
 # Percorso per l'eseguibile Python dell'ambiente virtuale
 python_executable = os.path.join(project_path, "main", "Scripts", "python.exe")
@@ -52,14 +39,15 @@ else:
     print("CUDA non disponibile. Elaborazione su CPU (più lenta)...")
 
 # Comando per eseguire Demucs con device dinamico
-demucs_command = f'"{python_executable}" -m demucs --two-stems=vocals -d {device} -o "{output_dir}" "{audio_path}"'
+os.environ['PATH'] += os.pathsep + os.path.join(project_path, "ffmpeg", "bin")
+demucs_command = f'"{python_executable}" -m demucs --two-stems=vocals -d {device} -o "{output_dir}" "{input_path}"'
 
 try:
     print(f"Esecuzione di Demucs: {demucs_command}")
     subprocess.run(demucs_command, shell=True, check=True)
 
     # Percorso della cartella generata automaticamente da Demucs
-    demucs_output_dir = os.path.join(output_dir, "htdemucs", os.path.splitext(audio_file)[0])
+    demucs_output_dir = os.path.join(output_dir, "htdemucs", os.path.splitext(os.path.basename(input_path))[0])
 
     # Sposta il file `vocals.wav` nella directory principale, rinominandolo in "vocali.wav"
     vocals_file = os.path.join(demucs_output_dir, "vocals.wav")
@@ -73,11 +61,6 @@ try:
     if os.path.exists(no_vocals_file):
         os.remove(no_vocals_file)
         print(f"`no_vocals.wav` eliminato.")
-
-    # Rimuovi il file originale "audio.wav"
-    if os.path.exists(audio_path):
-        os.remove(audio_path)
-        print(f"`audio.wav` eliminato.")
 
     # Rimuovi la cartella `htdemucs`
     shutil.rmtree(os.path.join(output_dir, "htdemucs"))

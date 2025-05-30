@@ -150,55 +150,24 @@ def adjust_sub_end_based_on_next_scene_change(original_subs, scene_subs):
 # Funzione per sostituire il timestamp finale della riga con il timestamp finale del cambio scena precedente
 def adjust_sub_end_based_on_previous_scene_change(original_subs, scene_subs, audio_peaks):
     max_range = 900
-    peak_threshold = 150  # 150ms per early/late peaks
-    min_gap_to_next_sub = 100
-    min_peaks_count = 2
-    
-    for i, sub in enumerate(original_subs):
-        original_end = sub.end.ordinal
+    extra_range_after_scene = 120  # 120ms dopo il cambio scena
+
+    for sub in original_subs:
+        sub_end = sub.end.ordinal
         sub_start = sub.start.ordinal
-        
-        # 1. Controllo gap alla riga successiva
-        next_sub_start = original_subs[i+1].start.ordinal if i+1 < len(original_subs) else float('inf')
-        gap_to_next = next_sub_start - original_end
-        
         for scene in reversed(scene_subs):
             scene_end = scene.end.ordinal
-            
-            if sub_start <= scene_end <= original_end and 0 < (original_end - scene_end) <= max_range:
-                # A. Priorità al gap alla riga successiva
-                if gap_to_next < min_gap_to_next_sub:
+            if sub_start <= scene_end <= sub_end and 0 < (sub_end - scene_end) <= max_range:
+                # Conta i picchi audio dopo il cambio scena
+                peaks_count = 0
+                for peak in audio_peaks:
+                    peak_time = int(peak * 1000)
+                    if scene_end <= peak_time <= sub_end:
+                        peaks_count += 1
+
+                # Sostituisci solo se ci sono 2 o meno picchi
+                if peaks_count <= 1:
                     sub.end = milliseconds_to_subrip_time(scene_end)
-                    break
-                    
-                peak_times = [int(peak * 1000) for peak in audio_peaks]
-                peaks_after_scene = [p for p in peak_times if scene_end <= p <= original_end]
-                
-                # B. Nessun picco -> collega
-                if not peaks_after_scene:
-                    sub.end = milliseconds_to_subrip_time(scene_end)
-                    break
-                
-                # C. NUOVA REGOLA del cazzo (punto 3)
-                early_peaks = [p for p in peaks_after_scene if (p - scene_end) <= peak_threshold]
-                late_peaks = [p for p in peaks_after_scene if (p - scene_end) > peak_threshold]
-                
-                # Solo picchi late (nessun early) ma >=2 -> collega
-                if not early_peaks and len(late_peaks) >= min_peaks_count:
-                    sub.end = milliseconds_to_subrip_time(scene_end)
-                    break
-                
-                # D. Logica dei 2+ picchi
-                if len(peaks_after_scene) >= min_peaks_count:
-                    break
-                
-                # E. ...
-                first_peak_diff = min(peaks_after_scene) - scene_end
-                if first_peak_diff > peak_threshold:
-                    sub.end = milliseconds_to_subrip_time(scene_end)
-                    break
-                    
-                sub.end = milliseconds_to_subrip_time(scene_end)
                 break
 
     return original_subs

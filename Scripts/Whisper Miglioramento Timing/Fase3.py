@@ -94,8 +94,8 @@ def process_segment(args):
     start_time, end_time = segment
     
     try:
-        video_manager = open_video(video_path)
-        video_manager.seek(max(0, start_time - 0.5))
+        video = open_video(video_path)
+        video.seek(max(0, start_time - 0.5))
         
         scene_manager = SceneManager()
         adaptive_detector = AdaptiveDetector(
@@ -104,7 +104,7 @@ def process_segment(args):
         )
         scene_manager.add_detector(adaptive_detector)
         
-        scene_manager.detect_scenes(video_manager, end_time=end_time + 0.5)
+        scene_manager.detect_scenes(video, end_time=end_time + 0.5)
         
         segment_scenes = []
         for scene in scene_manager.get_scene_list():

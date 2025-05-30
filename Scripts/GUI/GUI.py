@@ -16,6 +16,7 @@ ctk.set_default_color_theme("blue")
 # Variabili globali
 config_fase2_visible = False
 config_fase4_visible = False
+config_whisper_visible = False
 config_entries = {}
 is_running = False
 funzione_selezionata = None
@@ -42,6 +43,8 @@ def mostra_config_fase2():
     if config_fase2_visible:
         if config_fase4_visible:
             nascondi_config_fase4()
+        if config_whisper_visible:
+            nascondi_config_whisper()
         
         config_path = os.path.join(paths['project_root'], "Scripts", "Migliora il Timing Dei Sub", "Config_Fase2.json")
         try:
@@ -122,6 +125,8 @@ def mostra_config_fase4():
     if config_fase4_visible:
         if config_fase2_visible:
             nascondi_config_fase2()
+        if config_whisper_visible:
+            nascondi_config_whisper()
         
         config_path = os.path.join(paths['project_root'], "Scripts", "Migliora il Timing Dei Sub", "Config_Fase4.json")
         try:
@@ -130,7 +135,9 @@ def mostra_config_fase4():
         except (FileNotFoundError, json.JSONDecodeError):
             config = {
                 "max_range_next_scene": 300,
-                "gap_threshold": 200
+                "gap_threshold": 230,
+                "scene_change_before_threshold": 200,
+                "scene_change_after_threshold": 200
             }
         
         config_frame = ctk.CTkFrame(frame_center)
@@ -155,6 +162,24 @@ def mostra_config_fase4():
         entry2.insert(0, str(config.get("gap_threshold", 200)))
         entry2.pack(side="right")
         config_entries["gap_threshold"] = entry2
+
+        # NUOVO CAMPO per scene_change_before_threshold
+        frame3 = ctk.CTkFrame(config_frame)
+        frame3.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(frame3, text="Max range to detect scene change before the initial timestamp (ms):", width=180).pack(side="left")
+        entry3 = ctk.CTkEntry(frame3, width=80)
+        entry3.insert(0, str(config.get("scene_change_before_threshold", 200)))
+        entry3.pack(side="right")
+        config_entries["scene_change_before_threshold"] = entry3
+
+        # NUOVO CAMPO per scene_change_after_threshold
+        frame4 = ctk.CTkFrame(config_frame)
+        frame4.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(frame4, text="Max range to detect scene change after the initial timestamp (ms):", width=180).pack(side="left")
+        entry4 = ctk.CTkEntry(frame4, width=80)
+        entry4.insert(0, str(config.get("scene_change_after_threshold", 200)))
+        entry4.pack(side="right")
+        config_entries["scene_change_after_threshold"] = entry4
         
         # Pulsanti Save/Cancel
         btn_frame = ctk.CTkFrame(config_frame)
@@ -211,12 +236,112 @@ def salva_config_fase2():
     except Exception as e:
         messagebox.showerror("Error", f"Error while saving: {str(e)}")
 
+def mostra_config_whisper():
+    global config_whisper_visible
+    
+    if funzione_selezionata != "Whisper":
+        return
+    
+    config_whisper_visible = not config_whisper_visible
+    
+    if config_whisper_visible:
+        if config_fase2_visible:
+            nascondi_config_fase2()
+        if config_fase4_visible:
+            nascondi_config_fase4()
+        
+        config_path = os.path.join(paths['project_root'], "Scripts", "Whisper", "whisper_config.json")
+        try:
+            with open(config_path, "r") as f:
+                config = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            config = {
+                "default_values": {
+                    "language": "ja",
+                    "model": "medium"
+                },
+                "options": {
+                    "languages": ["af", "am", "ar", "as", "az", "ba", "be", "bg", "bn", "bo", "br", "bs", "ca", "cs", "cy", "da", "de", "el", "en", "es", "et", "eu", "fa", "fi", "fo", "fr", "gl", "gu", "ha", "haw", "he", "hi", "hr", "ht", "hu", "hy", "id", "is", "it", "ja", "jw", "ka", "kk", "km", "kn", "ko", "la", "lb", "ln", "lo", "lt", "lv", "mg", "mi", "mk", "ml", "mn", "mr", "ms", "mt", "my", "ne", "nl", "nn", "no", "oc", "pa", "pl", "ps", "pt", "ro", "ru", "sa", "sd", "si", "sk", "sl", "sn", "so", "sq", "sr", "su", "sv", "sw", "ta", "te", "tg", "th", "tk", "tl", "tr", "tt", "uk", "ur", "uz", "vi", "yi", "yo", "yue", "zh"],
+                    "models": ["tiny", "tiny.en", "base", "base.en", "small", "small.en", "medium", "medium.en", "large-v1", "large-v2", "large-v3", "large"]
+                }
+            }
+        
+        config_frame = ctk.CTkFrame(frame_center)
+        config_frame.pack(fill="x", padx=10, pady=(0, 10), before=log_text)
+        
+        ctk.CTkLabel(config_frame, text="Whisper Configuration", font=("Arial", 14, "bold")).pack(pady=5)
+        
+        # Language selection
+        lang_frame = ctk.CTkFrame(config_frame)
+        lang_frame.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(lang_frame, text="Language:", width=120).pack(side="left")
+        lang_var = ctk.StringVar(value=config["default_values"]["language"])
+        lang_menu = ctk.CTkOptionMenu(
+            lang_frame, 
+            variable=lang_var,
+            values=config["options"]["languages"],
+            width=120
+        )
+        lang_menu.pack(side="right")
+        config_entries["language"] = lang_var
+        
+        # Model selection
+        model_frame = ctk.CTkFrame(config_frame)
+        model_frame.pack(fill="x", padx=5, pady=2)
+        ctk.CTkLabel(model_frame, text="Model:", width=120).pack(side="left")
+        model_var = ctk.StringVar(value=config["default_values"]["model"])
+        model_menu = ctk.CTkOptionMenu(
+            model_frame, 
+            variable=model_var,
+            values=config["options"]["models"],
+            width=120
+        )
+        model_menu.pack(side="right")
+        config_entries["model"] = model_var
+        
+        # Buttons
+        btn_frame = ctk.CTkFrame(config_frame)
+        btn_frame.pack(fill="x", pady=5)
+        
+        ctk.CTkButton(
+            btn_frame, 
+            text="Save", 
+            command=salva_config_whisper,
+            width=80,
+            fg_color="#2FA572"
+        ).pack(side="left", padx=10)
+        
+        ctk.CTkButton(
+            btn_frame, 
+            text="Cancel", 
+            command=nascondi_config_whisper,
+            width=80,
+            fg_color="#D35F5F"
+        ).pack(side="right", padx=10)
+        
+        config_entries["whisper_frame"] = config_frame
+        
+    else:
+        nascondi_config_whisper()
+
+def nascondi_config_whisper():
+    global config_whisper_visible
+    if "whisper_frame" in config_entries:
+        config_entries["whisper_frame"].pack_forget()
+        config_entries["whisper_frame"].destroy()
+        for key in ["language", "model", "whisper_frame"]:
+            if key in config_entries:
+                config_entries.pop(key)
+    config_whisper_visible = False
+
 def salva_config_fase4():
     try:
         config_path = os.path.join(paths['project_root'], "Scripts", "Migliora il Timing Dei Sub", "Config_Fase4.json")
         new_config = {
             "max_range_next_scene": int(config_entries["max_range_next_scene"].get()),
-            "gap_threshold": int(config_entries["gap_threshold"].get())
+            "gap_threshold": int(config_entries["gap_threshold"].get()),
+            "scene_change_before_threshold": int(config_entries["scene_change_before_threshold"].get()),
+            "scene_change_after_threshold": int(config_entries["scene_change_after_threshold"].get())
         }
         
         with open(config_path, "w") as f:
@@ -230,15 +355,50 @@ def salva_config_fase4():
     except Exception as e:
         messagebox.showerror("Error", f"Error while saving: {str(e)}")
 
+def salva_config_whisper():
+    try:
+        config_path = os.path.join(paths['project_root'], "Scripts", "Whisper", "whisper_config.json")
+        new_config = {
+            "default_values": {
+                "language": config_entries["language"].get(),
+                "model": config_entries["model"].get()
+            },
+            "options": {
+                "languages": ["af", "am", "ar", "as", "az", "ba", "be", "bg", "bn", "bo", "br", "bs", "ca", "cs", "cy", "da", "de", "el", "en", "es", "et", "eu", "fa", "fi", "fo", "fr", "gl", "gu", "ha", "haw", "he", "hi", "hr", "ht", "hu", "hy", "id", "is", "it", "ja", "jw", "ka", "kk", "km", "kn", "ko", "la", "lb", "ln", "lo", "lt", "lv", "mg", "mi", "mk", "ml", "mn", "mr", "ms", "mt", "my", "ne", "nl", "nn", "no", "oc", "pa", "pl", "ps", "pt", "ro", "ru", "sa", "sd", "si", "sk", "sl", "sn", "so", "sq", "sr", "su", "sv", "sw", "ta", "te", "tg", "th", "tk", "tl", "tr", "tt", "uk", "ur", "uz", "vi", "yi", "yo", "yue", "zh"],
+                "models": ["tiny", "tiny.en", "base", "base.en", "small", "small.en", "medium", "medium.en", "large-v1", "large-v2", "large-v3", "large"]
+            }
+        }
+        
+        with open(config_path, "w") as f:
+            json.dump(new_config, f, indent=4)
+        
+        messagebox.showinfo("Success", "Whisper configuration saved successfully!")
+        nascondi_config_whisper()
+        
+    except Exception as e:
+        messagebox.showerror("Error", f"Error while saving: {str(e)}")
+
 def aggiorna_visibilita_pulsanti_config():
     if funzione_selezionata == "Auto Sub ReTimer":
+        btn_config_fase2.pack(side="left", padx=5)
+        btn_config_fase4.pack(side="left", padx=5)
+        btn_config_whisper.pack_forget()
         btn_config_fase2.configure(state="normal")
         btn_config_fase4.configure(state="normal")
+    elif funzione_selezionata == "Whisper":
+        btn_config_fase2.pack_forget()
+        btn_config_fase4.pack_forget()
+        btn_config_whisper.pack(side="left", padx=5)
+        btn_config_whisper.configure(state="normal")
     else:
-        btn_config_fase2.configure(state="disabled")
-        btn_config_fase4.configure(state="disabled")
-        nascondi_config_fase2()
-        nascondi_config_fase4()
+        btn_config_fase2.pack_forget()
+        btn_config_fase4.pack_forget()
+        btn_config_whisper.pack_forget()
+    
+    # Hide all config panels when switching functions
+    nascondi_config_fase2()
+    nascondi_config_fase4()
+    nascondi_config_whisper()
 
 # --------------------------------------------------
 # GESTIONE PERCORSI E STATO
@@ -261,6 +421,7 @@ def setup_paths():
             },
             'whisper_scripts': {
                 'fase0': os.path.join(project_root, "Scripts", "Whisper", "Fase0.py"),
+                'fase1': os.path.join(project_root, "Scripts", "Whisper", "Fase1.py"),
                 'venv_python': os.path.join(project_root, "main", "Scripts", "python.exe"),
                 'exe_folder': os.path.join(project_root, "Faster-Whisper-XXL"),
                 'exe_file': os.path.join(project_root, "Faster-Whisper-XXL", "faster-whisper-xxl.exe"),
@@ -482,7 +643,6 @@ btn_config_fase2 = ctk.CTkButton(
     width=120,
     state="disabled"
 )
-btn_config_fase2.pack(side="left", padx=5)
 
 btn_config_fase4 = ctk.CTkButton(
     config_buttons_frame,
@@ -491,7 +651,17 @@ btn_config_fase4 = ctk.CTkButton(
     width=120,
     state="disabled"
 )
-btn_config_fase4.pack(side="left", padx=5)
+
+btn_config_whisper = ctk.CTkButton(
+    config_buttons_frame,
+    text="Config Whisper",
+    command=mostra_config_whisper,
+    width=120,
+    state="disabled"
+)
+
+# Initially hide all config buttons
+btn_config_whisper.pack_forget()
 
 # Area log
 log_text = ctk.CTkTextbox(
@@ -724,12 +894,15 @@ def esegui_whisper():
         progress_manager.update_phase(0)
         log_message("▶ Running Fase0.py (preparation)...\n")
         
+        # Esegui Fase0.py
         fase0_result = subprocess.run(
             [paths['whisper_scripts']['venv_python'], paths['whisper_scripts']['fase0']],
             cwd=paths['project_root'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            text=True
+            text=True,
+            encoding='utf-8',
+            errors='replace'
         )
         
         if fase0_result.returncode != 0:
@@ -740,34 +913,18 @@ def esegui_whisper():
         progress_manager.update_progress(100)
         
         progress_manager.update_phase(1)
-        log_message("▶ Starting Faster-Whisper...\n")
+        log_message("▶ Running Fase1.py (Whisper execution)...\n")
         
-        whisper_cmd = [
-            paths['whisper_scripts']['exe_file'],
-            paths['whisper_scripts']['input_file'],
-            "--language", "ja",
-            "--model", "medium",
-            "--vad_filter", "True",
-            "--vad_method", "pyannote_onnx_v3",
-            "--sentence",
-            "--word_timestamps", "True",
-            "--clip_timestamps", "1",
-            "--no_speech_threshold", "0.1",
-            "--condition_on_previous_text", "False",
-            "--vad_min_silence_duration_ms", "100",
-            "--output_dir", paths['project_root']
-        ]
-        
+        # Esegui Fase1.py con gestione output in tempo reale
         process = subprocess.Popen(
-            whisper_cmd,
-            cwd=paths['whisper_scripts']['exe_folder'],
+            [paths['whisper_scripts']['venv_python'], paths['whisper_scripts']['fase1']],
+            cwd=paths['project_root'],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             bufsize=1,
             universal_newlines=True,
             encoding='utf-8',
-            errors='replace',
-            shell=True
+            errors='replace'
         )
         
         while True:
@@ -781,16 +938,13 @@ def esegui_whisper():
                     progress_manager.update_progress(progress)
                 log_message(output)
         
-        if process.returncode == 3221226505:
-            log_message("✔ Transcription completed successfully\n")
-            log_message("(Note: Output might be truncated but process succeeded)\n")
-        elif process.returncode != 0:
-            log_message(f"✖ Error in Faster-Whisper (code {process.returncode})\n")
+        if process.returncode == 0 or process.returncode == 3221226505:
+            log_message("✔ Whisper execution completed successfully\n")
+            progress_manager.complete_all()
+            return True
         else:
-            log_message("✔ Transcription completed successfully\n")
-        
-        progress_manager.complete_all()
-        return process.returncode == 0 or process.returncode == 3221226505
+            log_message(f"✖ Error in Fase1.py (code {process.returncode})\n")
+            return False
         
     except Exception as e:
         log_message(f"⚠ Error during execution: {str(e)}\n")

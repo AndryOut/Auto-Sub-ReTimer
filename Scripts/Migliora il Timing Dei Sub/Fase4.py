@@ -16,7 +16,9 @@ CONFIG_PATH = os.path.join(project_path, "Scripts", "Migliora il Timing Dei Sub"
 # Valori di default
 DEFAULT_CONFIG = {
     "max_range_next_scene": 300,
-    "gap_threshold": 230 
+    "gap_threshold": 230,
+    "scene_change_before_threshold": 200,
+    "scene_change_after_threshold": 200
 }
 
 try:
@@ -24,9 +26,13 @@ try:
         config = json.load(f)
     MAX_RANGE_NEXT_SCENE = config.get("max_range_next_scene", DEFAULT_CONFIG["max_range_next_scene"])
     GAP_THRESHOLD = config.get("gap_threshold", DEFAULT_CONFIG["gap_threshold"])
+    SCENE_CHANGE_BEFORE_THRESHOLD = config.get("scene_change_before_threshold", DEFAULT_CONFIG["scene_change_before_threshold"])
+    SCENE_CHANGE_AFTER_THRESHOLD = config.get("scene_change_after_threshold", DEFAULT_CONFIG["scene_change_after_threshold"])
 except (FileNotFoundError, json.JSONDecodeError):
     MAX_RANGE_NEXT_SCENE = DEFAULT_CONFIG["max_range_next_scene"]
-    GAP_THRESHOLD = DEFAULT_CONFIG["gap_threshold"] 
+    GAP_THRESHOLD = DEFAULT_CONFIG["gap_threshold"]
+    SCENE_CHANGE_BEFORE_THRESHOLD = DEFAULT_CONFIG["scene_change_before_threshold"]
+    SCENE_CHANGE_AFTER_THRESHOLD = DEFAULT_CONFIG["scene_change_after_threshold"]
 
 # =============================================
 # FUNZIONI PRINCIPALI
@@ -53,7 +59,7 @@ def adjust_subs_based_on_scenes(original_subs, scene_subs):
         for scene in reversed(scene_subs):
             scene_end = scene.end.ordinal
             sub_start = sub.start.ordinal
-            if 0 < (sub_start - scene_end) <= 200:
+            if 0 < (sub_start - scene_end) <= SCENE_CHANGE_AFTER_THRESHOLD:
                 sub.start = milliseconds_to_subrip_time(scene_end)
                 start_replaced = True
                 break
@@ -77,7 +83,7 @@ def adjust_sub_start_based_on_scene_change(original_subs, scene_subs):
         sub_start = sub.start.ordinal
         for scene in scene_subs:
             scene_start = scene.start.ordinal
-            if 0 < (scene_start - sub_start) <= 200:
+            if 0 < (scene_start - sub_start) <= SCENE_CHANGE_BEFORE_THRESHOLD:
                 sub.start = milliseconds_to_subrip_time(scene_start)
                 break
     return original_subs
