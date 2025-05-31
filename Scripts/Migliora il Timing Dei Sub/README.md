@@ -81,16 +81,34 @@ Fase4.py:
 - Adds lead-in to lines with low CPM adjusted to a scene change to prevent the line from lasting too short on-screen.  
 - Joins lines with 0.000 seconds if there is a gap of silence between lines within a range of 0.300 seconds.  
 
-Values you can modify: 1.  
+Values you can modify: 4.  
 
-Value 1:  
+Value 1 "Max range to detect a scene change from the final timestamp (ms)":  
 
-![2](https://github.com/user-attachments/assets/3ee11fbf-a970-4d7a-944f-bd604b254547)
+![fase4](https://github.com/user-attachments/assets/e614e08e-89ee-4bec-85e0-7a082e41e708)
 
 Changing this value gives more margin to detect a scene change occurring after the line's final timestamp.  
 (If you set this value too high, it may result in lines being extended too much as lead-out to adjust to a scene change. )
 
 (Keep in mind that this value is linked to the lead-out of "Fase2". So if you have set "500" in lead-out, the "300" range will check if there are scene changes after "500" of lead out, this means that if it finds a scene change, you will have a line that from the final audio peak will be a hypothetical 800 ms in lead-out until the detected scene change (500 ± 300).
+
+Value 2 "Max gap 'empty' between two lines to attach (ms)":
+
+![fase4](https://github.com/user-attachments/assets/6d424b8a-aad4-4856-8f07-d2cdf717e37e)
+
+This setting allows you to configure the threshold for deciding how much "empty" space there must be to merge two subtitle lines. Merging the lines improves fluidity between them. If you leave it at 230, the lines won’t stretch too much to attach to the next line, but there will be a natural "break" based on the fluidity of the speech. (This is obviously a personal preference, but you can now adjust the threshold to your liking).
+
+Value 3 "Max range to detect scene change before the initial timestamp (ms):
+
+![fase4](https://github.com/user-attachments/assets/840ae9ef-b171-4fdb-b0d5-044ac1bef798)
+
+Allows you to set the maximum distance to detect a scene change and link it before the initial timestamp of the line.
+
+Value 4 "Max range to detect scene change after the initial timestamp (ms):
+
+![fase4](https://github.com/user-attachments/assets/e1cd1def-68ae-4b99-a205-214ab6c6ed44)
+
+Allows you to set the maximum distance to detect a scene change and link it after the initial timestamp of the line.
 
 Fase5.py:  
 - Ensures that if you initially uploaded an .ass file with subs to adjust, you will get a final .ass file with the original header of the uploaded subs, and every single line will retain its original styles but with adjusted timing.  
